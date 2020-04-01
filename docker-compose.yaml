@@ -1,0 +1,18 @@
+version: '3'
+services:
+    apache:
+        build: .docker/apache
+        container_name: rest_client_apache
+        ports:
+          - 81:80
+        volumes:
+          - .docker/config/vhosts:/etc/apache2/sites-enabled
+          - .:/home/wwwroot/html
+        depends_on:
+          - php
+
+    php:
+        build: .docker/php
+        container_name: rest_client_php
+        volumes:
+          - .:/home/wwwroot/html
