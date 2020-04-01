@@ -1,5 +1,12 @@
 {
-    "require": {
-        "nyholm/psr7": "^1.2"
+  "name": "rt/rest-client",
+  "description": "Rest Client",
+  "require": {
+    "nyholm/psr7": "^1.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "RT\\Client\\": "src/"
     }
+  }
 }
