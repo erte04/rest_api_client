@@ -80,4 +80,11 @@ final class CurlTest extends TestCase
         $this->assertIsString($data['job']);
         $this->assertIsString($data['updatedAt']);
     }
+
+
+    public function testCurlDELETE()
+    {
+        $Response = $this->curl->exec(new Request('Delete', $this->url . '/users/1'));
+        $this->assertSame(204, $Response->getStatusCode());
+    }
 }
