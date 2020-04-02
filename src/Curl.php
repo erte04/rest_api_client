@@ -34,10 +34,19 @@ class Curl
 
     private function setOptions(RequestInterface $request): array
     {
+
         $options = [];
         switch (strtoupper($request->getMethod())) {
             case 'GET':
                 $options[CURLOPT_HTTPGET] = true;
+                break;
+            case 'POST':
+                $options[CURLOPT_POST] = 1;
+            case 'PUT':
+            case 'PATCH':
+                $options[CURLOPT_HTTPHEADER] = ['Content-Type: application/json', 'Content-Length: ' . strlen($request->getBody()->__toString())];
+                $options[CURLOPT_POSTFIELDS] = $request->getBody()->__toString();
+                $options[CURLOPT_CUSTOMREQUEST] = strtoupper($request->getMethod());
                 break;
         }
 

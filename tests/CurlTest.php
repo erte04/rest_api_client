@@ -52,10 +52,10 @@ final class CurlTest extends TestCase
         $Response = $this->curl->exec(new Request('Post', $this->url . '/users', [], $body));
         $this->assertSame(201, $Response->getStatusCode());
         $data = json_decode($Response->getBody(), true);
-        $this->assertIsInt($data['data']['id']);
-        $this->assertIsString($data['data']['name']);
-        $this->assertIsString($data['data']['job']);
-        $this->assertIsString($data['data']['createdAt']);
+        $this->assertArrayHasKey('id', $data);
+        $this->assertIsString($data['name']);
+        $this->assertIsString($data['job']);
+        $this->assertIsString($data['createdAt']);
     }
 
 
@@ -76,8 +76,8 @@ final class CurlTest extends TestCase
         $Response = $this->curl->exec(new Request($method, $this->url . '/users/1', [], $body));
         $this->assertSame(200, $Response->getStatusCode());
         $data = json_decode($Response->getBody(), true);
-        $this->assertIsString($data['data']['name']);
-        $this->assertIsString($data['data']['job']);
-        $this->assertIsString($data['data']['updatedAt']);
+        $this->assertIsString($data['name']);
+        $this->assertIsString($data['job']);
+        $this->assertIsString($data['updatedAt']);
     }
 }
