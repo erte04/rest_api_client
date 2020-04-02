@@ -9,6 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 class Curl
 {
     private $curlHandle;
+    private $headers = [];
 
     public function __construct()
     {
@@ -21,6 +22,10 @@ class Curl
         curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt_array($this->curlHandle, $this->setOptions($request));
 
+        $headers = array_merge($this->prepareHeaders($request->getHeaders()), $this->headers);
+        curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $headers);
+
+
         $curl_data = curl_exec($this->curlHandle);
 
         if (!curl_errno($this->curlHandle)) {
@@ -31,7 +36,7 @@ class Curl
         return new Response($info['http_code'], [], $curl_data);
     }
 
-    
+
 
 
     private function setOptions(RequestInterface $request): array
@@ -46,12 +51,23 @@ class Curl
             case 'PUT':
             case 'PATCH':
             case 'DELETE':
-                $options[CURLOPT_HTTPHEADER] = ['Content-Type: application/json', 'Content-Length: ' . strlen($request->getBody()->__toString())];
+                $this->headers[] = 'Content-Length: ' . strlen($request->getBody()->__toString());
+                $this->headers[] = 'Content-Type: application/json';
                 $options[CURLOPT_POSTFIELDS] = $request->getBody()->__toString();
                 $options[CURLOPT_CUSTOMREQUEST] = strtoupper($request->getMethod());
                 break;
         }
 
         return $options;
+    }
+
+    private function prepareHeaders($headers): array
+    {
+        $headersResult = [];
+        foreach ($headers as $key => $value) {
+            $headersResult[] = $key . ': ' . $value[0];
+        }
+
+        return $headersResult;
     }
 }
