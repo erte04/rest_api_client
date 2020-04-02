@@ -44,6 +44,7 @@ class Curl
                 $options[CURLOPT_POST] = 1;
             case 'PUT':
             case 'PATCH':
+            case 'DELETE':
                 $options[CURLOPT_HTTPHEADER] = ['Content-Type: application/json', 'Content-Length: ' . strlen($request->getBody()->__toString())];
                 $options[CURLOPT_POSTFIELDS] = $request->getBody()->__toString();
                 $options[CURLOPT_CUSTOMREQUEST] = strtoupper($request->getMethod());
