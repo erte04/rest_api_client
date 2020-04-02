@@ -32,9 +32,10 @@ class Curl
     }
 
 
+
+
     private function setOptions(RequestInterface $request): array
     {
-
         $options = [];
         switch (strtoupper($request->getMethod())) {
             case 'GET':
