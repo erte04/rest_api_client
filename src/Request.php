@@ -2,7 +2,7 @@
 
 namespace RT\Client;
 
-class Request
+
+class Request implements RequestInterface
 {
-    
 }

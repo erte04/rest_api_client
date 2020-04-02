@@ -2,6 +2,6 @@
 
 namespace RT\Client;
 
-class Response{
-    
+class Response implements ResponseInterface
+{
 }
