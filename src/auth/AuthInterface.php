@@ -4,5 +4,5 @@ namespace RT\Client\Auth;
 
 interface AuthInterface
 {
-    public function setHeader();
+    public function getHeader();
 }

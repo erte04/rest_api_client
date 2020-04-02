@@ -4,5 +4,5 @@ namespace RT\Client\Auth;
 
 class JWTAuth implements AuthInterface
 {
-    public function setHeader(){}
+    public function getHeader(){}
 }
