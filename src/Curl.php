@@ -31,7 +31,7 @@ class Curl
         return new Response($info['http_code'], [], $curl_data);
     }
 
-
+    
 
 
     private function setOptions(RequestInterface $request): array
