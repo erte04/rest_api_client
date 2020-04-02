@@ -48,7 +48,7 @@ final class CurlTest extends TestCase
 
     public function testCurlPOST()
     {
-        $body = ['name' => 'test', 'job' => 'developer'];
+        $body = json_encode(['name' => 'test', 'job' => 'developer']);
         $Response = $this->curl->exec(new Request('Post', $this->url . '/users', [], $body));
         $this->assertSame(201, $Response->getStatusCode());
         $data = json_decode($Response->getBody(), true);
@@ -72,7 +72,7 @@ final class CurlTest extends TestCase
 
     private function checkEdit($method)
     {
-        $body = ['name' => 'test', 'job' => 'developer'];
+        $body = json_encode(['name' => 'test', 'job' => 'developer']);
         $Response = $this->curl->exec(new Request($method, $this->url . '/users/1', [], $body));
         $this->assertSame(200, $Response->getStatusCode());
         $data = json_decode($Response->getBody(), true);
