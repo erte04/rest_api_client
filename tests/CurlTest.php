@@ -61,13 +61,23 @@ final class CurlTest extends TestCase
 
     public function testCurlPUT()
     {
+        $this->checkEdit('put');
+    }
+
+
+    public function testCurlPATCH()
+    {
+        $this->checkEdit('patch');
+    }
+
+    private function checkEdit($method)
+    {
         $body = ['name' => 'test', 'job' => 'developer'];
-        $Response = $this->curl->exec(new Request('Put', $this->url . '/users/1', [], $body));
+        $Response = $this->curl->exec(new Request($method, $this->url . '/users/1', [], $body));
         $this->assertSame(200, $Response->getStatusCode());
         $data = json_decode($Response->getBody(), true);
         $this->assertIsString($data['data']['name']);
         $this->assertIsString($data['data']['job']);
         $this->assertIsString($data['data']['updatedAt']);
     }
-
 }
