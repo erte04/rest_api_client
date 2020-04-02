@@ -24,16 +24,19 @@ class Curl
 
         $headers = array_merge($this->prepareHeaders($request->getHeaders()), $this->headers);
         curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($this->curlHandle, CURLOPT_HEADER, 1);
 
 
         $curl_data = curl_exec($this->curlHandle);
 
         if (!curl_errno($this->curlHandle)) {
             $info = curl_getinfo($this->curlHandle);
+            $headers = explode("\r\n", substr($curl_data, 0,  $info['header_size']));
+            $body = substr($curl_data, $info['header_size']);
         }
 
         curl_close($this->curlHandle);
-        return new Response($info['http_code'], [], $curl_data);
+        return new Response($info['http_code'], $this->prepareResponsHeaders($headers), $body);
     }
 
 
@@ -66,6 +69,19 @@ class Curl
         $headersResult = [];
         foreach ($headers as $key => $value) {
             $headersResult[] = $key . ': ' . $value[0];
+        }
+
+        return $headersResult;
+    }
+
+    private function prepareResponsHeaders($headers): array
+    {
+        $headersResult = [];
+        foreach ($headers as $key => $value) {
+            if (preg_match('$\:$', $value)) {
+                $arr = explode(':', $value);
+                $headersResult[$arr[0]] = $arr[1];
+            }
         }
 
         return $headersResult;

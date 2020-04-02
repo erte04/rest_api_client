@@ -22,4 +22,9 @@ class Response implements ResponseInterface
     {
         return $this->response->getStatusCode();
     }
+
+    public function getHeaders(): array
+    {
+        return $this->response->getHeaders();
+    }
 }

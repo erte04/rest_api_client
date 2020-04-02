@@ -12,3 +12,4 @@ $Response = $Request->request('Get', 'http://httpbin.org/basic-auth/test/test');
 
 var_dump($Response->getBody());
 var_dump($Response->getStatusCode());
+var_dump($Response->getHeaders());
