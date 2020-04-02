@@ -44,4 +44,17 @@ final class CurlTest extends TestCase
         $Response = $this->curl->exec(new Request('Get', $this->url . '/users/85'));
         $this->assertSame(404, $Response->getStatusCode());
     }
+
+
+    public function testCurlPOST()
+    {
+        $body = ['name' => 'test', 'job' => 'developer'];
+        $Response = $this->curl->exec(new Request('Post', $this->url . '/users/85', [], $body));
+        $this->assertSame(201, $Response->getStatusCode());
+        $data = json_decode($Response->getBody(), true);
+        $this->assertIsInt($data['data']['id']);
+        $this->assertIsString($data['data']['name']);
+        $this->assertIsString($data['data']['job']);
+        $this->assertIsString($data['data']['createdAt']);
+    }
 }
