@@ -1,5 +1,5 @@
 
-W celu przetestowani modułu przy pomocy dockera (potrzebny docker i docker-compose):
+W celu przetestowania modułu przy pomocy dockera (potrzebny docker i docker-compose):
 1. przejdź do katalogu modułu
 2. otwórz konsolę na katalogu
 3. wpisz komendę: docker-compose up -d
