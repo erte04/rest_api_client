@@ -87,4 +87,5 @@ final class CurlTest extends TestCase
         $Response = $this->curl->exec(new Request('Delete', $this->url . '/users/1'));
         $this->assertSame(204, $Response->getStatusCode());
     }
+
 }

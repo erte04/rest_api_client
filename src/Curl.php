@@ -2,6 +2,7 @@
 
 namespace RT\Client;
 
+use Exception;
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -33,6 +34,8 @@ class Curl
             $info = curl_getinfo($this->curlHandle);
             $headers = explode("\r\n", substr($curl_data, 0,  $info['header_size']));
             $body = substr($curl_data, $info['header_size']);
+        } else {
+            throw new Exception(curl_error($this->curlHandle));
         }
 
         curl_close($this->curlHandle);

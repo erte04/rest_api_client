@@ -5,6 +5,7 @@ require_once('../vendor/autoload.php');
 use RT\Client\Request;
 
 $Request = new Request();
+$Request->addHeader(['asdad' => 'test']);
 $Response = $Request->request('get', 'https://reqres.in/api/users');
 
 echo 'Status: ' . $Response->getStatusCode();
